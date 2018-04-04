@@ -6,7 +6,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       activeTab: 0,
-      recipes: [{name: 'coolRecipe1', ingredients: [{name: 'oregano', measurement: 'Units', quantity: 10}, {name: 'basil', measurement: 'Units', quantity: 2}]}, {name: 'coolRecipe2', ingredients: [{name: 'basil', measurement: 'items', quantity: 2}]}]
+      recipes: [{name: 'coolRecipe1', ingredients: [{name: 'oregano', measurement: 'units', quantity: 10}, {name: 'basil', measurement: 'units', quantity: 2}]}, {name: 'coolRecipe2', ingredients: [{name: 'basil', measurement: 'items', quantity: 2}]}]
     };
   }
   render(){

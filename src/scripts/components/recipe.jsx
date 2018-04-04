@@ -7,7 +7,7 @@ class Recipe extends React.Component {
       isActive: false,
       isEditing: props.isActive,
       ingredients: this.props.ingredients,
-      measurements: ['oz', 'lb', 'mg', 'g', 'kg', 'ml', 'Units']
+      measurements: ['oz', 'lb', 'mg', 'g', 'kg', 'ml', 'units']
     };
   }
   render(){
@@ -17,21 +17,24 @@ class Recipe extends React.Component {
           {this.state.ingredients.map((ingredient, index)=>{
             return <div key={index} className="row">
               <div className="col-sm-6 col-md-2">
-                <label for="amount" className="w-100">Quantity</label>
-                <input id="amount" className="w-100" type="text" value={this.state.ingredients[index].quantity} index={index} name={'quantity'} onChange={this.changeMeasurement.bind(this)} />
+                <label htmlFor="amount" className="w-100">Quantity</label>
+                <input id="amount" className="w-100" type="text" value={this.state.ingredients[index].quantity} name={'quantity'} onChange={(event)=>{this.changeMeasurement(event, index, this)}} />
               </div>
               <div className="col-sm-6 col-md-2">
-                <label for="measurement" className="w-100">Measurement</label>
-                <select id="measurement" className="w-100" placeholder="select measurement" index={index} name={'measurment'} value={this.state.ingredients[index].measurement} onChange={this.changeMeasurement.bind(this)}>
+                <label htmlFor="measurement" className="w-100">Measurement</label>
+                <select id="measurement" className="w-100" placeholder="select measurement" name={'measurment'} value={this.state.ingredients[index].measurement} onChange={(event)=>{this.changeMeasurement(event, index, this)}}>
                   {this.state.measurements.map((measurement, index)=><option key={index} value={measurement}>{measurement}</option>)}
                 </select>
               </div>
               <div className="col-sm-12 col-md-8">
-                <label for="ingredient" className="w-100">Ingredient</label>
-                <input id="ingredient" className="w-100" type="text" value={this.state.ingredients[index].name} index={index} name={'name'} onChange={this.changeMeasurement.bind(this)} />
+                <label htmlFor="ingredient" className="w-100">Ingredient</label>
+                <input id="ingredient" className="w-100" type="text" value={this.state.ingredients[index].name} name={'name'} onChange={(event)=>{this.changeMeasurement(event, index, this)}} />
               </div>
             </div>
           })}
+          <div className=" row col-sm-12 col-md-2">
+            <input className="primary" type="submit" value="Update" />
+          </div>
         </form>
       ) :
       (<div className="col-sm-12">
@@ -43,10 +46,12 @@ class Recipe extends React.Component {
     </div>);
   }
 
-  changeMeasurement(event){
-    console.log(event);
+  changeMeasurement(event, index, scope){
+    let newState = Object.assign({}, scope.state);
+    newState.ingredients[index][event.target.name] = event.target.value;
+    scope.setState(newState);
+    console.log(scope.state);
   }
-
 }
 
 export { Recipe };
