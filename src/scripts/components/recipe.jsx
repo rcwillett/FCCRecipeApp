@@ -4,16 +4,16 @@ class Recipe extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      isActive: false,
-      isEditing: props.isActive,
+      isActive: props.isActive,
+      name: this.props.name,
       ingredients: this.props.ingredients,
       measurements: ['oz', 'lb', 'mg', 'g', 'kg', 'ml', 'units']
     };
   }
   render(){
     return(<div className="wrapper">
-      {this.state.isEditing ? (
-        <form noValidate="noValidate" onSubmit={this.props.modifyRecipe(this.props.index, this.state.ingredients)}>
+      {this.state.isActive ? (
+        <form noValidate="noValidate" onSubmit={(e)=> {e.preventDefault(); this.props.modifyRecipe(this.props.index, this.state.name, this.state.ingredients);}}>
           {this.state.ingredients.map((ingredient, index)=>{
             return <div key={index} className="row">
               <div className="col-sm-6 col-md-2">
@@ -40,7 +40,7 @@ class Recipe extends React.Component {
       (<div className="col-sm-12">
         <h2>{this.props.name}</h2>
         {this.state.ingredients.map((ingredient, index)=>{
-          return <div key={index}>{ingredient.name + ' ' + ingredient.measurement + ' ' + ingredient.quantity}: {index}</div>;
+          return <div key={index}>{ingredient.quantity + ' ' + ingredient.measurement + ' - ' +  ingredient.name}</div>;
         })}
       </div>)}
     </div>);

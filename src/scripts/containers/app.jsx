@@ -5,7 +5,7 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      activeTab: 0,
+      activeTab: -1,
       recipes: [{name: 'coolRecipe1', ingredients: [{name: 'oregano', measurement: 'units', quantity: 10}, {name: 'basil', measurement: 'units', quantity: 2}]}, {name: 'coolRecipe2', ingredients: [{name: 'basil', measurement: 'items', quantity: 2}]}]
     };
   }
@@ -13,6 +13,7 @@ class App extends React.Component {
     return (
       <div>
       {this.state.recipes.map((recipe, index)=>{return <Recipe key={index} id={index} modifyRecipe = {this.modifyRecipe.bind(this)} isActive={index === this.state.activeTab} {...recipe} />;})}
+      <button onClick={this.addRecipe.bind(this)}>Add New Recipe</button>
     </div>
     );
   }
@@ -20,19 +21,23 @@ class App extends React.Component {
 
   }
   addRecipe(){
-    let newRecipe = new recipeObject(name, ingredients);
+    let newRecipe = new recipeObject(name, []);
     let newList = this.state.recipes.concat([newRecipe]);
-    this.setState(Object.assign({},this.state, {recipes: newList}));
+    let activeTab = newList.length - 1;
+    this.setState(Object.assign({},this.state, {recipes: newList, activeTab: activeTab}));
   }
-  modifyRecipe(index, ingredients){
-    console.log(ingredients);
+  modifyRecipe(index, name, ingredients){
+    let modifiedRecipe = new recipeObject(name, ingredients);
+    let newList = this.state.recipes.concat([]);
+    newList[index] = modifiedRecipe;
+    this.setState({recipes: newList, activeTab: -1});
   }
 }
 
 class recipeObject {
   constructor(name, ingredients){
     this.name = name;
-    this.ingredients = [];
+    this.ingredients = ingredients.length > 0 ? ingredients : [new ingredientObject(0, 'units', '')];
   }
 }
 
