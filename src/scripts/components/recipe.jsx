@@ -10,6 +10,11 @@ class Recipe extends React.Component {
       measurements: ['oz', 'lb', 'mg', 'g', 'kg', 'ml', 'units']
     };
   }
+
+componentWillReceiveProps(nextProps){
+  this.setState(Object.assign({}, this.state, {isActive : nextProps.isActive}))
+}
+
   render(){
     return(<div className="wrapper">
       {this.state.isActive ? (
