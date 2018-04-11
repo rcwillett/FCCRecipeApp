@@ -12,7 +12,7 @@ class App extends React.Component {
   render(){
     return (
       <div>
-      {this.state.recipes.map((recipe, index)=>{return <Recipe key={index} id={index} modifyRecipe = {this.modifyRecipe.bind(this)} isActive={index === this.state.activeTab} {...recipe} />;})}
+      {this.state.recipes.map((recipe, index)=>{return <Recipe index={index} id={index} modifyRecipe = {this.modifyRecipe.bind(this)} isActive={index === this.state.activeTab} {...recipe} />;})}
       <button onClick={this.addRecipe.bind(this)}>Add New Recipe</button>
     </div>
     );
@@ -28,8 +28,14 @@ class App extends React.Component {
   }
   modifyRecipe(index, name, ingredients){
     let modifiedRecipe = new recipeObject(name, ingredients);
-    let newList = this.state.recipes.concat([]);
-    newList[index] = modifiedRecipe;
+    let newList;
+    if(index > this.state.recipes.length - 1){
+      newList = this.state.recipes.concat([modifiedRecipe]);
+    }
+    else{
+      newList = this.state.recipes.concat([]);
+      newList[index] = modifiedRecipe;
+    }
     this.setState({recipes: newList, activeTab: -1});
   }
 }

@@ -19,11 +19,14 @@ componentWillReceiveProps(nextProps){
     return(<div className="wrapper">
       {this.state.isActive ? (
         <form noValidate="noValidate" onSubmit={(e)=> {e.preventDefault(); this.props.modifyRecipe(this.props.index, this.state.name, this.state.ingredients);}}>
+          <div className="row col-sm-12">
+            <input type="text" name="name" placeholder="Enter Name" value={this.state.name} onChange={this.changeProperty.bind(this)} />
+          </div>
           {this.state.ingredients.map((ingredient, index)=>{
             return <div key={index} className="row">
               <div className="col-sm-6 col-md-2">
                 <label htmlFor="amount" className="w-100">Quantity</label>
-                <input id="amount" className="w-100" type="text" value={this.state.ingredients[index].quantity} name={'quantity'} onChange={(event)=>{this.changeMeasurement(event, index, this)}} />
+                <input id="amount" className="w-100" type="text" value={this.state.ingredients[index].quantity} name={'quantity'} onChange={(event)=>{this.changeMeasurement.call(this, event, index)}} />
               </div>
               <div className="col-sm-6 col-md-2">
                 <label htmlFor="measurement" className="w-100">Measurement</label>
@@ -37,7 +40,7 @@ componentWillReceiveProps(nextProps){
               </div>
             </div>
           })}
-          <div className=" row col-sm-12 col-md-2">
+          <div className="row col-sm-12 col-md-2">
             <input className="primary" type="submit" value="Update" />
           </div>
         </form>
@@ -51,11 +54,17 @@ componentWillReceiveProps(nextProps){
     </div>);
   }
 
-  changeMeasurement(event, index, scope){
-    let newState = Object.assign({}, scope.state);
+  changeProperty(event){
+    let updateObject = {};
+    updateObject[event.target.name] = event.target.value;
+    this.setState(Object.assign({}, this.state, updateObject));
+    console.log(this.state);
+  }
+
+  changeMeasurement(event, index){
+    let newState = Object.assign({}, this.state);
     newState.ingredients[index][event.target.name] = event.target.value;
-    scope.setState(newState);
-    console.log(scope.state);
+    this.setState(newState);
   }
 }
 
