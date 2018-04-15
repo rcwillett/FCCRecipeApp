@@ -3,3 +3,6 @@
 #Folders
 node_modules/
 public/
+
+#VS Code
+*.code-workspace
