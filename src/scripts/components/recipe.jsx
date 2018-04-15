@@ -27,7 +27,7 @@ class Recipe extends React.Component {
             return <div key={index} className="row">
               <div className="col-sm-6 col-md-2">
                 <label htmlFor="amount" className="w-100">Quantity</label>
-                <input id="amount" className="w-100" type="text" value={this.state.ingredients[index].amount} name={'quantity'} onChange={(event) => { this.changeMeasurement.call(this, event, index) }} />
+                <input id="amount" className="w-100" type="text" value={this.state.ingredients[index].quantity} name={'quantity'} onChange={(event) => { this.changeMeasurement.call(this, event, index) }} />
               </div>
               <div className="col-sm-6 col-md-2">
                 <label htmlFor="measurement" className="w-100">Measurement</label>
@@ -54,6 +54,9 @@ class Recipe extends React.Component {
           {this.state.ingredients.map((ingredient, index) => {
             return <div key={index}>{ingredient.quantity + ' ' + ingredient.measurement + ' - ' + ingredient.name}</div>;
           })}
+          <div>
+            <button onClick={() => this.props.editRecipe(this.props.index)}>Edit Recipe</button>
+            </div>
         </div>)}
     </div>);
   }
@@ -70,7 +73,6 @@ class Recipe extends React.Component {
     newState.ingredients[index][event.target.name] = event.target.value;
     this.setState(newState);
   }
-
 
   addIngredient(){
     let newIngredientList = this.state.ingredients.concat(new ingredientObject());
