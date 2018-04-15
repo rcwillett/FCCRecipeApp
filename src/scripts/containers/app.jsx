@@ -1,5 +1,7 @@
 import * as React from "react";
 import {Recipe} from "../components/recipe.jsx";
+import recipeObject from '../models/recipe.js';
+import ingredientObject from  '../models/ingredient.js';
 
 class App extends React.Component {
   constructor(props){
@@ -37,21 +39,6 @@ class App extends React.Component {
       newList[index] = modifiedRecipe;
     }
     this.setState({recipes: newList, activeTab: -1});
-  }
-}
-
-class recipeObject {
-  constructor(name, ingredients){
-    this.name = name;
-    this.ingredients = ingredients.length > 0 ? ingredients : [new ingredientObject(0, 'units', '')];
-  }
-}
-
-class ingredientObject {
-  constructor(amount, measurement, name){
-    this.amount = amount;
-    this.measurement = measurement;
-    this.name = name;
   }
 }
 
